@@ -1,0 +1,22 @@
+.urlcard {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  color: black;
+  //   padding: 5px;
+  border-radius: 20px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  cursor: default;
+  background-color: rgba(226, 226, 226, 0.781);
+
+  &:hover {
+    background-color: #fff;
+    transition: 0.3s ease-out;
+  }
+
+  & > * {
+    margin: 0;
+    padding: 14px;
+  }
+}
