@@ -7,7 +7,9 @@ export default function Home() {
   // const longUrlRef = useRef();
 
   const [longUrl, setlongUrl] = useState('');
-  const [urlData, setUrlData] = useState([]);
+  const [urlData, setUrlData] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [change, setChange] = useState(false);
 
   const postRequest = async () => {
     try {
@@ -21,26 +23,33 @@ export default function Home() {
     }
     return postRequest;
   };
-  // return postRequest;
 
   useEffect(() => {
-    const call = async () => {
-      try {
-        const data = axios.get('http://localhost:5000/url');
-        setUrlData(data);
-        console.log(urlData);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    return call();
-  }, [longUrl]);
+    async function fetchData() {
+      console.log('hello');
+      axios.get('http://localhost:5000/url').then((response) => {
+        // console.log(response.data);
+        setUrlData(() => response.data);
+      });
+    }
+    fetchData();
+    setTimeout(() => {
+      setLoading(true);
+    }, 1000);
+  }, [change]);
 
   function handleSubmit(e) {
-    e.preventDefault();
+    // e.preventDefault();
     console.log(longUrl);
     postRequest();
     setlongUrl('');
+    setChange(true);
+  }
+
+  function redirect(url) {
+    console.log(url);
+    // window.location.replace(url)
+    window.location.href = url;
   }
   return (
     <div className="container">
@@ -54,7 +63,17 @@ export default function Home() {
           placeholder="Enter Long Url"
         />
       </form>
-      <UrlCard />
+      <div className="url-list">
+        {loading &&
+          urlData.map((urldata, index) => (
+            <UrlCard
+              handleClick={() => redirect(urldata.longUrl)}
+              data={urldata}
+              key={index}
+            />
+          ))}
+      </div>
+      {/* <UrlCard handleClick={tryClick} /> */}
     </div>
   );
 }

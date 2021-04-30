@@ -9,6 +9,8 @@ connectDB();
 
 app.use(express.json({ extended: false }));
 app.use(cors());
+const PORT = process.env.PORT || 5000;
+
 // const url = new Url({
 //   urlCode: '2',
 //   longUrl: 'abc',
@@ -16,8 +18,8 @@ app.use(cors());
 //   date: new Date(),
 // });
 // url.save();
-app.get('/url/:code', (req, res) => {
-  res.send('Hello from server' + req.params.code);
+app.get('/awake', (req, res) => {
+  res.send('Server Is Active');
 });
 
 app.post('/url', async (req, res) => {
@@ -60,5 +62,19 @@ app.get('/url', async (req, res) => {
     res.status(400).send(error);
   }
 });
-const PORT = 5000;
+
+app.get('/:code', async (req, res) => {
+  const code = req.params.code;
+  try {
+    let url = await Url.findOne({ urlCode: code });
+    let longUrl = url.longUrl;
+    // res.send(longUrl);
+    res.redirect(longUrl);
+  } catch (error) {
+    res.status(400).send(error);
+  }
+
+  // res.send(longUrl);
+  // res.send('Hello from server' + req.params.code);
+});
 app.listen(PORT, () => console.log(`server running at port  ${PORT}`));
