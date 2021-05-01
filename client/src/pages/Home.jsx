@@ -14,7 +14,7 @@ export default function Home() {
   const postRequest = async () => {
     try {
       console.log('hello');
-      const response = await axios.post('http://localhost:5000/url', {
+      const response = await axios.post('https://ak-surl.herokuapp.com/url', {
         longUrl,
       });
       console.log(response.data);
@@ -27,7 +27,7 @@ export default function Home() {
   useEffect(() => {
     async function fetchData() {
       console.log('hello');
-      axios.get('http://localhost:5000/url').then((response) => {
+      axios.get('https://ak-surl.herokuapp.com/url').then((response) => {
         // console.log(response.data);
         setUrlData(() => response.data);
       });
@@ -39,7 +39,7 @@ export default function Home() {
   }, [change]);
 
   function handleSubmit(e) {
-    // e.preventDefault();
+    e.preventDefault();
     console.log(longUrl);
     postRequest();
     setlongUrl('');

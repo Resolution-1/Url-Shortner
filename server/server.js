@@ -24,7 +24,8 @@ app.get('/awake', (req, res) => {
 
 app.post('/url', async (req, res) => {
   const { longUrl } = req.body;
-  const baseUrl = 'http://localhost:5000';
+  // const baseUrl = 'http://localhost:5000';
+  const baseUrl = 'https://ak-surl.herokuapp.com';
 
   if (!validUrl.isUri(baseUrl)) {
     res.status(401).json('Invalid base Url');
@@ -74,7 +75,6 @@ app.get('/:code', async (req, res) => {
     res.status(400).send(error);
   }
 
-  // res.send(longUrl);
   // res.send('Hello from server' + req.params.code);
 });
 app.listen(PORT, () => console.log(`server running at port  ${PORT}`));
