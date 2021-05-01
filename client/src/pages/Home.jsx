@@ -35,7 +35,7 @@ export default function Home() {
     fetchData();
     setTimeout(() => {
       setLoading(true);
-    }, 1000);
+    }, 1500);
   }, [change]);
 
   function handleSubmit(e) {
