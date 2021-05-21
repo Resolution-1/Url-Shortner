@@ -1,10 +1,12 @@
 const express = require('express');
+const path = require('path');
 const connectDB = require('./db');
 const cors = require('cors');
 const app = express();
 const Url = require('./models/url');
 const validUrl = require('valid-url');
 const shortid = require('shortid');
+const process = require('process');
 connectDB();
 
 app.use(express.json({ extended: false }));
@@ -18,8 +20,17 @@ const PORT = process.env.PORT || 5000;
 //   date: new Date(),
 // });
 // url.save();
-app.get('/awake', (req, res) => {
-  res.send('Server Is Active');
+
+var __dirname = path.dirname(__filename);
+
+console.log(process.cwd());
+console.log(__filename);
+app.get('/', async (req, res) => {
+  try {
+    res.sendFile(path.join(__dirname, '/public', '/index.html'));
+  } catch (err) {
+    res.send('Server Not Working');
+  }
 });
 
 app.post('/url', async (req, res) => {
